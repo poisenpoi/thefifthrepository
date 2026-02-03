@@ -20,12 +20,11 @@ export default function PathDetails({
     0,
   );
 
-  // Fix: Handle 0 duration correctly. Only default to 1 hour if there is duration > 0 but < 30 mins.
   const totalHours =
     totalDurationMinutes === 0
       ? 0
       : Math.max(1, Math.round(totalDurationMinutes / 60));
-      
+
   const totalCourses = path.items.length;
 
   return (
@@ -36,62 +35,80 @@ export default function PathDetails({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <BackButton />
 
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-            {path.title}
-          </h1>
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+            {/* Left Column: Info & Actions */}
+            <div className="lg:col-span-2">
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                {path.title}
+              </h1>
 
-          <p className="text-lg text-slate-600 max-w-3xl leading-relaxed mb-8">
-            {path.description}
-          </p>
+              <p className="text-lg text-slate-600 leading-relaxed mb-8">
+                {path.description}
+              </p>
 
-          <div className="flex flex-wrap items-center gap-6 md:gap-10">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-eduBlue" />
-              </div>
               <div>
-                <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">
-                  Courses
-                </p>
-                <p className="font-bold text-slate-900">{totalCourses} Steps</p>
+                {!isAuthenticated ? (
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-2 bg-eduBlue hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg"
+                  >
+                    <PlayCircle className="w-5 h-5" />
+                    Start Learning Path
+                  </Link>
+                ) : nextCourseSlug ? (
+                  <Link
+                    href={`/courses/${nextCourseSlug}`}
+                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg"
+                  >
+                    <PlayCircle className="w-5 h-5" />
+                    Continue Learning
+                  </Link>
+                ) : (
+                  <div className="inline-flex items-center gap-2 bg-emerald-500 text-white font-bold py-3 px-8 rounded-full shadow-lg">
+                    Path Completed
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                <Clock className="w-5 h-5 text-eduBlue" />
-              </div>
-              <div>
-                <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">
-                  Duration
-                </p>
-                <p className="font-bold text-slate-900">{totalHours} Hours</p>
+            {/* Right Column: Details Card */}
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm">
+              <h3 className="font-bold text-slate-900 mb-6 text-lg">
+                Path Details
+              </h3>
+
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                    <BookOpen className="w-6 h-6 text-eduBlue" />
+                  </div>
+                  <div>
+                    <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">
+                      Courses
+                    </p>
+                    <p className="font-bold text-slate-900 text-lg">
+                      {totalCourses} Steps
+                    </p>
+                  </div>
+                </div>
+
+                <div className="h-px w-full bg-slate-200" />
+
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                    <Clock className="w-6 h-6 text-eduBlue" />
+                  </div>
+                  <div>
+                    <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">
+                      Duration
+                    </p>
+                    <p className="font-bold text-slate-900 text-lg">
+                      {totalHours} Hours
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="mt-10">
-            {!isAuthenticated ? (
-              <Link
-                href="/login"
-                className="inline-flex items-center gap-2 bg-eduBlue hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg"
-              >
-                <PlayCircle className="w-5 h-5" />
-                Start Learning Path
-              </Link>
-            ) : nextCourseSlug ? (
-              <Link
-                href={`/courses/${nextCourseSlug}`}
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg"
-              >
-                <PlayCircle className="w-5 h-5" />
-                Continue Learning
-              </Link>
-            ) : (
-              <div className="inline-flex items-center gap-2 bg-emerald-500 text-white font-bold py-3 px-8 rounded-full shadow-lg">
-                Path Completed
-              </div>
-            )}
           </div>
         </div>
       </div>

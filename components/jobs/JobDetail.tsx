@@ -7,9 +7,12 @@ import {
   CheckCircle,
   Send,
   Clock,
-  Bookmark,
   ArrowUpDown,
   Banknote,
+  Globe,
+  Building2,
+  Users,
+  UserCheck,
 } from "lucide-react";
 import { JobUI } from "@/types/job.ui";
 import { ApplicationStatus, User, Profile } from "@prisma/client";
@@ -34,14 +37,14 @@ export default function JobDetail({
       return (
         <Link
           href="/login"
-          className="w-full block text-center bg-eduBlue text-white py-3 rounded-lg font-semibold"
+          className="w-full block text-center bg-eduBlue text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
         >
           Login to Apply
         </Link>
       );
     }
 
-    if (user.role !== "EDUCATEE") return;
+    if (user.role !== "EDUCATEE") return null;
 
     switch (applicationStatus) {
       case "APPLIED":
@@ -79,7 +82,7 @@ export default function JobDetail({
           <form action={applyJob.bind(null, job.id)}>
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 bg-eduBlue hover:bg-blue-700 text-white py-3 rounded-lg font-semibold"
+              className="w-full flex items-center justify-center gap-2 bg-eduBlue hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-all"
             >
               <Send className="w-5 h-5" />
               Apply Now
@@ -124,174 +127,226 @@ export default function JobDetail({
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="space-y-4 flex flex-col">
             <BackButton />
-            <span className="bg-eduBlue px-4 py-1 rounded-full text-xs font-bold uppercase w-fit">
+            <span className="bg-eduBlue px-4 py-1 rounded-full text-xs font-bold uppercase w-fit tracking-wide">
               {job.category.name}
             </span>
-            <h1 className="text-4xl font-extrabold">{job.title}</h1>
-            <div className="flex flex-wrap gap-4 text-sm text-slate-300">
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+              {job.title}
+            </h1>
+            <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-300">
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
+                <MapPin className="w-4 h-4 text-slate-400" />
                 {job.location?.toUpperCase() ??
                   job.user.profile?.companyAddress?.toUpperCase() ??
                   "JOB LOCATION"}
               </div>
               <div className="flex items-center gap-2">
-                <Briefcase className="w-4 h-4" />
+                <Briefcase className="w-4 h-4 text-slate-400" />
                 {job.level || "ANY"}
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
+                <Clock className="w-4 h-4 text-slate-400" />
                 {job.type.replace("_", " ")}
               </div>
               <div className="flex items-center gap-2">
-                <ArrowUpDown className="w-4 h-4" />
+                <ArrowUpDown className="w-4 h-4 text-slate-400" />
                 {job.workMode}
               </div>
-            </div>
-            <div className="text-sm text-slate-300 flex items-center gap-2">
-              <Banknote className="w-4 h-4" />
-              {formatPaycheck(job.paycheckMin, job.paycheckMax)}
-            </div>
-            <div className="text-sm text-slate-300">
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                Last Updated:{" "}
-                {new Date(job.updatedAt).toLocaleDateString("id-ID", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
+                <Banknote className="w-4 h-4 text-slate-400" />
+                {formatPaycheck(job.paycheckMin, job.paycheckMax)}
               </div>
+            </div>
+            <div className="pt-4 mt-2 border-t border-slate-800 text-xs text-slate-400 flex items-center gap-2">
+              <Clock className="w-3 h-3" />
+              Last Updated:{" "}
+              {new Date(job.updatedAt).toLocaleDateString("id-ID", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Row 1: Company Profile & Application Stats */}
-        <section className="bg-white rounded-xl border border-slate-200 p-6 lg:col-span-3 shadow-sm">
-          <h2 className="text-xl font-bold mb-4">Company Profile</h2>
-          <div className="flex gap-3">
-            <img
-              src={job.user.profile?.pictureUrl || "/avatars/male.svg"}
-              alt="Company Logo"
-              className="h-20 w-20"
-            />
-            <div>
-              <p className="text-black">
-                {job.user.profile?.name || "Company Name"}
-              </p>
-              <p className="text-slate-700">
-                {job.user.profile?.companyAddress || "Company Address"}
-              </p>
-              <p className="text-slate-700">
-                {job.user.profile?.companyWebsite ? (
-                  <a
-                    href={websiteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-eduBlue hover:text-blue-700 transition-colors"
-                  >
-                    {job.user.profile.companyWebsite}
-                    <svg
-                      className="w-3 h-3 opacity-60"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                      />
-                    </svg>
-                  </a>
-                ) : null}
-              </p>
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left Column: Main Content */}
+        <div className="lg:col-span-2 space-y-8">
+          {/* Company Profile Card */}
+          <section className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="p-6 md:p-8">
+              <div className="flex items-start gap-5">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl border border-slate-100 bg-slate-50 p-2 shrink-0 flex items-center justify-center">
+                  <img
+                    src={job.user.profile?.pictureUrl || "/avatars/male.svg"}
+                    alt="Company Logo"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-2xl font-bold text-slate-900 truncate">
+                    {job.user.profile?.name || "Company Name"}
+                  </h2>
+                  <div className="flex flex-col gap-1.5 mt-2">
+                    <div className="flex items-center gap-2 text-sm text-slate-600">
+                      <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
+                      <span className="truncate">
+                        {job.user.profile?.companyAddress || "Company Address"}
+                      </span>
+                    </div>
+                    {job.user.profile?.companyWebsite && (
+                      <div className="flex items-center gap-2 text-sm">
+                        <Globe className="w-4 h-4 text-slate-400 shrink-0" />
+                        <a
+                          href={websiteUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-eduBlue hover:text-blue-700 hover:underline transition-colors truncate"
+                        >
+                          {job.user.profile.companyWebsite}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <hr className="my-6 border-slate-100" />
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="md:col-span-2">
+                  <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide mb-3">
+                    About the Company
+                  </h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    {job.user.profile?.bio || "No bio available."}
+                  </p>
+                </div>
+                <div className="bg-slate-50 rounded-xl p-5 space-y-5 border border-slate-100">
+                  <div>
+                    <div className="flex items-center gap-2 text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">
+                      <Briefcase className="w-3.5 h-3.5" /> Jobs Posted
+                    </div>
+                    <div className="text-2xl font-bold text-slate-900">
+                      {job.user.profile?.totalJobs || 0}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">
+                      <UserCheck className="w-3.5 h-3.5" /> Hire Rate
+                    </div>
+                    <div className="text-2xl font-bold text-slate-900">
+                      {Math.round(hireRate) || 0}%
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="flex mt-4">
-            <p className="text-slate-700 w-[50%] p-2">
-              {job.user.profile?.bio || "Bio"}
-            </p>
-            <div className="w-[50%] p-2 border-l">
-              <p className="text-black">
-                Jobs posted: {job.user.profile?.totalJobs || 0}
-              </p>
-              <p className="text-slate-700 text-sm">
-                {hireRate || 0}% hire rate
-              </p>
+          </section>
+
+          {/* Job Description Card */}
+          <section className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8">
+            <h2 className="text-xl font-bold text-slate-900 mb-6">
+              Job Description
+            </h2>
+            <div className="prose prose-slate prose-sm max-w-none text-slate-600 leading-relaxed whitespace-pre-line">
+              {job.description}
             </div>
-          </div>
-        </section>
-
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-3 lg:col-span-1 shadow-sm">
-          <h3 className="text-xl font-bold mb-4">Application Stats</h3>
-
-          <div className="flex justify-between text-sm">
-            <span className="text-slate-500">Applicants</span>
-            <span className="font-semibold">{job.applicators}</span>
-          </div>
-
-          <div className="flex justify-between text-sm">
-            <span className="text-slate-500">Hired</span>
-            <span className="font-semibold">{job.hired}</span>
-          </div>
-
-          {user && user.role === "EDUCATEE" && (
-            <div className="pt-4 border-t flex flex-col gap-3">
-              {!profile ||
-              !profile.name ||
-              !profile.gender ||
-              !profile.dob ? (
-                <p className="text-sm text-red-500 font-medium">
-                  Please complete your profile first before applying.
-                </p>
-              ) : (
-                renderApplyButton()
-              )}
-            </div>
-          )}
+          </section>
         </div>
 
-        {/* Row 2: Job Description & Job Info */}
-        <section className="bg-white rounded-xl border border-slate-200 p-6 lg:col-span-3 shadow-sm">
-          <h2 className="text-xl font-bold mb-4">Job Description</h2>
-          <p className="text-slate-700 leading-relaxed whitespace-pre-line">
-            {job.description}
-          </p>
-        </section>
+        {/* Right Column: Sidebar */}
+        <div className="space-y-6">
+          {/* Application Stats Card */}
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <h3 className="text-lg font-bold text-slate-900 mb-5">
+              Application Status
+            </h3>
 
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-3 lg:col-span-1 shadow-sm">
-          <h3 className="text-xl font-bold mb-4">Job Info</h3>
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-center">
+                <div className="text-2xl font-bold text-blue-700 mb-1">
+                  {job.applicators}
+                </div>
+                <div className="text-xs font-medium text-blue-600 uppercase tracking-wide">
+                  Applicants
+                </div>
+              </div>
+              <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 text-center">
+                <div className="text-2xl font-bold text-emerald-700 mb-1">
+                  {job.hired}
+                </div>
+                <div className="text-xs font-medium text-emerald-600 uppercase tracking-wide">
+                  Hired
+                </div>
+              </div>
+            </div>
 
-          <div className="flex justify-between text-sm">
-            <span className="text-slate-500">Location</span>
-            <span className="font-semibold capitalize">
-              {job.location ??
-                job.user.profile?.companyAddress ??
-                "Job Location"}
-            </span>
+            {user && user.role === "EDUCATEE" && (
+              <div className="pt-5 border-t border-slate-100">
+                {!profile ||
+                !profile.name ||
+                !profile.gender ||
+                !profile.dob ? (
+                  <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg border border-red-100">
+                    Please complete your profile first before applying.
+                  </div>
+                ) : (
+                  renderApplyButton()
+                )}
+              </div>
+            )}
           </div>
 
-          <div className="flex justify-between text-sm">
-            <span className="text-slate-500">Level</span>
-            <span className="font-semibold capitalize">
-              {job.level?.toLowerCase() || "Any"}
-            </span>
-          </div>
+          {/* Job Info Card */}
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <h3 className="text-lg font-bold text-slate-900 mb-5">
+              Job Information
+            </h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0 last:pb-0">
+                <div className="flex items-center gap-2 text-slate-500 text-sm">
+                  <MapPin className="w-4 h-4" />
+                  Location
+                </div>
+                <span className="font-medium text-slate-900 text-sm capitalize text-right max-w-[60%] truncate">
+                  {job.location ??
+                    job.user.profile?.companyAddress ??
+                    "Job Location"}
+                </span>
+              </div>
 
-          <div className="flex justify-between text-sm">
-            <span className="text-slate-500">Type</span>
-            <span className="font-semibold capitalize">
-              {job.type.replace("_", " ").toLowerCase()}
-            </span>
-          </div>
+              <div className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0 last:pb-0">
+                <div className="flex items-center gap-2 text-slate-500 text-sm">
+                  <Briefcase className="w-4 h-4" />
+                  Level
+                </div>
+                <span className="font-medium text-slate-900 text-sm capitalize">
+                  {job.level?.toLowerCase() || "Any"}
+                </span>
+              </div>
 
-          <div className="flex justify-between text-sm">
-            <span className="text-slate-500">Work Mode</span>
-            <span className="font-semibold capitalize">{job.workMode.toLowerCase()}</span>
+              <div className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0 last:pb-0">
+                <div className="flex items-center gap-2 text-slate-500 text-sm">
+                  <Clock className="w-4 h-4" />
+                  Type
+                </div>
+                <span className="font-medium text-slate-900 text-sm capitalize">
+                  {job.type.replace("_", " ").toLowerCase()}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0 last:pb-0">
+                <div className="flex items-center gap-2 text-slate-500 text-sm">
+                  <Building2 className="w-4 h-4" />
+                  Work Mode
+                </div>
+                <span className="font-medium text-slate-900 text-sm capitalize">
+                  {job.workMode.toLowerCase()}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
