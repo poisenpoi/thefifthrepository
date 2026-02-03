@@ -167,140 +167,131 @@ export default function JobDetail({
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <div className="lg:col-span-2 space-y-8">
-          <section className="bg-white rounded-xl border p-6">
-            <h2 className="text-xl font-bold mb-4">Job Description</h2>
-            <p className="text-slate-700 leading-relaxed whitespace-pre-line">
-              {job.description}
-            </p>
-          </section>
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Row 1: Job Description & Application Stats */}
+        <section className="bg-white rounded-xl border p-6">
+          <h2 className="text-xl font-bold mb-4">Job Description</h2>
+          <p className="text-slate-700 leading-relaxed whitespace-pre-line">
+            {job.description}
+          </p>
+        </section>
 
-          <section className="bg-white rounded-xl border p-6">
-            <h2 className="text-xl font-bold mb-4">Company Profile</h2>
-            <div className="flex gap-3">
-              <img
-                src={job.user.profile?.pictureUrl || "/avatars/male.svg"}
-                alt="Company Logo"
-                className="h-20 w-20"
-              />
-              <div>
-                <p className="text-black">
-                  {job.user.profile?.name || "Company Name"}
-                </p>
-                <p className="text-slate-700">
-                  {job.user.profile?.companyAddress || "Company Address"}
-                </p>
-                <p className="text-slate-700">
-                  {job.user.profile?.companyWebsite ? (
-                    <a
-                      href={websiteUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-eduBlue hover:text-blue-700 transition-colors"
-                    >
-                      {job.user.profile.companyWebsite}
-                      <svg
-                        className="w-3 h-3 opacity-60"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                        />
-                      </svg>
-                    </a>
-                  ) : null}
-                </p>
-              </div>
-            </div>
-            <div className="flex">
-              <p className="text-slate-700 w-[50%] p-2">
-                {job.user.profile?.bio || "Bio"}
-              </p>
-              <div className="w-[50%] p-2 border-l">
-                <p className="text-black">
-                  Jobs posted: {job.user.profile?.totalJobs || 0}
-                </p>
-                <p className="text-slate-700 text-sm">
-                  {hireRate || 0}% hire rate
-                </p>
-              </div>
-            </div>
-          </section>
-        </div>
+        <div className="bg-white rounded-xl border p-6 space-y-3">
+          <h3 className="text-xl font-bold mb-4">Application Stats</h3>
 
-        <div className="space-y-6">
-          <div className="bg-white rounded-xl border p-6 space-y-4">
-            <div className="flex justify-between text-sm">
-              <span className="text-slate-500">Applicants</span>
-              <span className="font-semibold">{job.applicators}</span>
-            </div>
-
-            <div className="flex justify-between text-sm">
-              <span className="text-slate-500">Hired</span>
-              <span className="font-semibold">{job.hired}</span>
-            </div>
-
-            {user && user.role === "EDUCATEE" && (
-              <div className="pt-4 border-t flex flex-col gap-3">
-                {!profile ||
-                !profile.name ||
-                !profile.gender ||
-                !profile.dob ? (
-                  <p className="text-sm text-red-500 font-medium">
-                    Please complete your profile first before applying.
-                  </p>
-                ) : (
-                  renderApplyButton()
-                  /* <form action={applyJob.bind(null, job.id, job.slug)}>
-                <button
-                  type="submit"
-                  className="w-full flex items-center justify-center gap-2 text-eduBlue hover:text-eduBlue/80 py-3 rounded-lg font-semibold"
-                >
-                  <Bookmark className="w-5 h-5" />
-                  Save Job
-                </button>
-              </form> */
-                )}
-              </div>
-            )}
+          <div className="flex justify-between text-sm">
+            <span className="text-slate-500">Applicants</span>
+            <span className="font-semibold">{job.applicators}</span>
           </div>
 
-          <div className="bg-white rounded-xl border p-6 space-y-3">
-            <h3 className="font-bold text-slate-900">Job Info</h3>
+          <div className="flex justify-between text-sm">
+            <span className="text-slate-500">Hired</span>
+            <span className="font-semibold">{job.hired}</span>
+          </div>
 
-            <div className="flex justify-between text-sm">
-              <span>Location</span>
-              <span className="capitalize">
-                {job.location ??
-                  job.user.profile?.companyAddress ??
-                  "Job Location"}
-              </span>
+          {user && user.role === "EDUCATEE" && (
+            <div className="pt-4 border-t flex flex-col gap-3">
+              {!profile ||
+              !profile.name ||
+              !profile.gender ||
+              !profile.dob ? (
+                <p className="text-sm text-red-500 font-medium">
+                  Please complete your profile first before applying.
+                </p>
+              ) : (
+                renderApplyButton()
+              )}
             </div>
+          )}
+        </div>
 
-            <div className="flex justify-between text-sm">
-              <span>Level</span>
-              <span className="capitalize">
-                {job.level?.toLowerCase() || "Any"}
-              </span>
+        {/* Row 2: Company Profile & Job Info */}
+        <section className="bg-white rounded-xl border p-6">
+          <h2 className="text-xl font-bold mb-4">Company Profile</h2>
+          <div className="flex gap-3">
+            <img
+              src={job.user.profile?.pictureUrl || "/avatars/male.svg"}
+              alt="Company Logo"
+              className="h-20 w-20"
+            />
+            <div>
+              <p className="text-black">
+                {job.user.profile?.name || "Company Name"}
+              </p>
+              <p className="text-slate-700">
+                {job.user.profile?.companyAddress || "Company Address"}
+              </p>
+              <p className="text-slate-700">
+                {job.user.profile?.companyWebsite ? (
+                  <a
+                    href={websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-eduBlue hover:text-blue-700 transition-colors"
+                  >
+                    {job.user.profile.companyWebsite}
+                    <svg
+                      className="w-3 h-3 opacity-60"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
+                  </a>
+                ) : null}
+              </p>
             </div>
+          </div>
+          <div className="flex mt-4">
+            <p className="text-slate-700 w-[50%] p-2">
+              {job.user.profile?.bio || "Bio"}
+            </p>
+            <div className="w-[50%] p-2 border-l">
+              <p className="text-black">
+                Jobs posted: {job.user.profile?.totalJobs || 0}
+              </p>
+              <p className="text-slate-700 text-sm">
+                {hireRate || 0}% hire rate
+              </p>
+            </div>
+          </div>
+        </section>
 
-            <div className="flex justify-between text-sm">
-              <span>Type</span>
-              <span className="capitalize">
-                {job.type.replace("_", " ").toLowerCase()}
-              </span>
-            </div>
+        <div className="bg-white rounded-xl border p-6 space-y-3">
+          <h3 className="text-xl font-bold mb-4">Job Info</h3>
 
-            <div className="flex justify-between text-sm">
-              <span>Work Mode</span>
-              <span className="capitalize">{job.workMode.toLowerCase()}</span>
-            </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-slate-500">Location</span>
+            <span className="font-semibold capitalize">
+              {job.location ??
+                job.user.profile?.companyAddress ??
+                "Job Location"}
+            </span>
+          </div>
+
+          <div className="flex justify-between text-sm">
+            <span className="text-slate-500">Level</span>
+            <span className="font-semibold capitalize">
+              {job.level?.toLowerCase() || "Any"}
+            </span>
+          </div>
+
+          <div className="flex justify-between text-sm">
+            <span className="text-slate-500">Type</span>
+            <span className="font-semibold capitalize">
+              {job.type.replace("_", " ").toLowerCase()}
+            </span>
+          </div>
+
+          <div className="flex justify-between text-sm">
+            <span className="text-slate-500">Work Mode</span>
+            <span className="font-semibold capitalize">{job.workMode.toLowerCase()}</span>
           </div>
         </div>
       </div>
