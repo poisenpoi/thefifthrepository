@@ -31,53 +31,22 @@ export default function PathDetails({
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-20">
       {/* sub header */}
       <div className="bg-white border-b border-slate-200">
-        {/* Fix: Changed max-w-5xl to max-w-7xl to align with Header */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <BackButton />
 
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-            {/* Left Column: Info & Actions */}
-            <div className="lg:col-span-2">
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-5">
               <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
                 {path.title}
               </h1>
 
-              <p className="text-lg text-slate-600 leading-relaxed mb-8">
+              <p className="text-lg text-slate-600 leading-relaxed">
                 {path.description}
               </p>
-
-              <div>
-                {!isAuthenticated ? (
-                  <Link
-                    href="/login"
-                    className="inline-flex items-center gap-2 bg-eduBlue hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg"
-                  >
-                    <PlayCircle className="w-5 h-5" />
-                    Start Learning Path
-                  </Link>
-                ) : nextCourseSlug ? (
-                  <Link
-                    href={`/courses/${nextCourseSlug}`}
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg"
-                  >
-                    <PlayCircle className="w-5 h-5" />
-                    Continue Learning
-                  </Link>
-                ) : (
-                  <div className="inline-flex items-center gap-2 bg-emerald-500 text-white font-bold py-3 px-8 rounded-full shadow-lg">
-                    Path Completed
-                  </div>
-                )}
-              </div>
             </div>
 
-            {/* Right Column: Details Card */}
-            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm">
-              <h3 className="font-bold text-slate-900 mb-6 text-lg">
-                Path Details
-              </h3>
-
-              <div className="space-y-6">
+            <div className="lg:col-span-4 flex justify-start lg:justify-center">
+              <div className="flex items-center gap-16 whitespace-nowrap">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
                     <BookOpen className="w-6 h-6 text-eduBlue" />
@@ -91,8 +60,6 @@ export default function PathDetails({
                     </p>
                   </div>
                 </div>
-
-                <div className="h-px w-full bg-slate-200" />
 
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
@@ -109,12 +76,35 @@ export default function PathDetails({
                 </div>
               </div>
             </div>
+
+            <div className="lg:col-span-3 flex justify-start lg:justify-end">
+              {!isAuthenticated ? (
+                <Link
+                  href="/login"
+                  className="inline-flex items-center gap-2 bg-eduBlue hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg whitespace-nowrap"
+                >
+                  <PlayCircle className="w-5 h-5" />
+                  Start Learning Path
+                </Link>
+              ) : nextCourseSlug ? (
+                <Link
+                  href={`/courses/${nextCourseSlug}`}
+                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg whitespace-nowrap"
+                >
+                  <PlayCircle className="w-5 h-5" />
+                  Continue Learning
+                </Link>
+              ) : (
+                <div className="inline-flex items-center gap-2 bg-emerald-500 text-white font-bold py-3 px-8 rounded-full shadow-lg whitespace-nowrap">
+                  Path Completed
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
       {/* timeline */}
-      {/* Fix: Changed max-w-5xl to max-w-7xl to align with Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h2 className="text-xl font-bold text-slate-900 mb-10">
           Path Curriculum

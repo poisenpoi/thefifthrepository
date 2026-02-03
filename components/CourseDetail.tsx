@@ -63,7 +63,8 @@ export default async function CourseDetails({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <BackButton />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-            <div className="lg:col-span-2 space-y-6">
+            {/* Fix: Changed to fixed height h-52 (13rem) and justify-start to align tags with the card top */}
+            <div className="lg:col-span-2 space-y-6 h-52 flex flex-col justify-start">
               <div className="flex items-center gap-3">
                 <span className="bg-eduBlue text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                   {course.category.name}
@@ -75,11 +76,11 @@ export default async function CourseDetails({
                 )}
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-white">
+              <h1 className="text-3xl md:text-3xl font-extrabold tracking-tight leading-tight text-white">
                 {course.title}
               </h1>
 
-              <p className="text-lg text-slate-300 leading-relaxed max-w-2xl">
+              <p className="text-base text-slate-300 leading-relaxed max-w-2xl">
                 {course.description}
               </p>
             </div>
@@ -92,7 +93,7 @@ export default async function CourseDetails({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Sidebar */}
           <div className="lg:col-span-1 lg:order-last relative lg:pb-12">
-            <div className="relative lg:-mt-48 z-10 lg:sticky top-24 self-start">
+            <div className="relative lg:-mt-64 z-10 lg:sticky top-24 self-start">
               <div className="bg-white rounded-2xl border border-slate-200/60 shadow-2xl shadow-slate-900/5 overflow-hidden">
                 <div className="aspect-video relative bg-slate-100 border-b border-slate-200/60">
                   <img
