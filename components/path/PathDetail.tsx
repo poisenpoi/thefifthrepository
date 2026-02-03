@@ -19,7 +19,7 @@ export default function PathDetails({
     (acc, item) => acc + item.course.duration,
     0,
   );
-  const totalHours = Math.max(1, Math.round(totalDurationMinutes / 60));
+  const totalHours = Math.round(totalDurationMinutes / 60);
   const totalCourses = path.items.length;
 
   return (
@@ -95,9 +95,9 @@ export default function PathDetails({
           Path Curriculum
         </h2>
 
-        <div className="relative">
+        <div className="relative md:pl-14">
           {/* vertical line */}
-          <div className="absolute left-8 top-4 bottom-4 w-0.5 bg-slate-200 hidden md:block" />
+          <div className="absolute left-5 top-4 bottom-4 w-0.5 bg-slate-200 hidden md:block" />
 
           <div className="space-y-8">
             {path.items.map((item, index) => {
@@ -106,11 +106,11 @@ export default function PathDetails({
               return (
                 <div
                   key={item.id}
-                  className="relative flex flex-col md:flex-row gap-6 md:gap-10 group"
+                  className="relative group"
                 >
                   {/* number */}
-                  <div className="hidden md:flex flex-none z-10">
-                    <div className="w-16 h-16 rounded-full bg-white border-2 border-eduBlue text-eduBlue font-bold text-2xl flex items-center justify-center shadow-sm group-hover:bg-eduBlue group-hover:text-white transition-colors duration-300">
+                  <div className="hidden md:flex absolute -left-14 top-1/2 -translate-y-1/2 z-10">
+                    <div className="w-10 h-10 rounded-full bg-white border-2 border-eduBlue text-eduBlue font-bold text-lg flex items-center justify-center shadow-sm group-hover:bg-eduBlue group-hover:text-white transition-colors duration-300">
                       {index + 1}
                     </div>
                   </div>
@@ -128,7 +128,7 @@ export default function PathDetails({
                   {/* card */}
                   <Link
                     href={`/courses/${course.slug}`}
-                    className="grow bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-slate-200/60 hover:border-eduBlue/30 transition-all duration-300 group-hover:-translate-y-1"
+                    className="block bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-slate-200/60 hover:border-eduBlue/30 transition-all duration-300 group-hover:-translate-y-1"
                   >
                     <div className="flex flex-col sm:flex-row gap-6">
                       {/* thumbnail */}
@@ -195,11 +195,13 @@ export default function PathDetails({
           </div>
 
           {/* finish node */}
-          <div className="flex flex-col md:flex-row gap-6 md:gap-10 mt-8 opacity-50">
-            <div className="hidden md:flex flex-none z-10 ml-5">
-              <div className="w-6 h-6 rounded-full bg-slate-200 border-4 border-white shadow-sm" />
+          <div className="relative mt-8 opacity-50">
+            <div className="hidden md:flex absolute -left-14 top-1/2 -translate-y-1/2 z-10">
+              <div className="w-10 h-10 rounded-full bg-slate-200 border-4 border-white shadow-sm flex items-center justify-center">
+                <div className="w-3 h-3 rounded-full bg-slate-300" />
+              </div>
             </div>
-            <div className="text-slate-400 font-medium italic pl-1">
+            <div className="text-slate-400 font-medium italic">
               Path Completion
             </div>
           </div>

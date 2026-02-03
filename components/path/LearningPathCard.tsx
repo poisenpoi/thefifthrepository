@@ -10,7 +10,7 @@ export default function LearningPathCard({
     (acc, item) => acc + item.course.duration,
     0,
   );
-  const totalHours = Math.max(1, Math.round(totalDurationMinutes / 60));
+  const totalHours = Math.round(totalDurationMinutes / 60);
   const courseCount = learningPath.items.length;
 
   return (
