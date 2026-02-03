@@ -123,9 +123,8 @@ export default function JobDetail({
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Header - Scaled to match PathDetail */}
       <div className="bg-slate-900 text-white border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-9">
           <BackButton />
           <div className="mt-8 space-y-4 flex flex-col">
             <span className="bg-eduBlue px-4 py-1 rounded-full text-xs font-bold uppercase w-fit">
@@ -152,10 +151,6 @@ export default function JobDetail({
                 {job.workMode}
               </div>
             </div>
-            <div className="text-sm text-slate-300 flex items-center gap-2">
-              <Banknote className="w-4 h-4" />
-              {formatPaycheck(job.paycheckMin, job.paycheckMax)}
-            </div>
             <div className="text-sm text-slate-300">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
@@ -172,9 +167,6 @@ export default function JobDetail({
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* ROW 1: Company Profile (Left) & Overview (Right) */}
-
-        {/* Company Profile Card */}
         <section className="lg:col-span-3 bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden h-full flex flex-col">
           <div className="px-5 py-3 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
             <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
@@ -246,7 +238,6 @@ export default function JobDetail({
           </div>
         </section>
 
-        {/* Overview (Stats) Card */}
         <div className="lg:col-span-1 bg-white rounded-lg border border-slate-200 p-4 shadow-sm h-full flex flex-col">
           <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2 mb-3">
             <LayoutDashboard className="w-4 h-4 text-slate-400" />
@@ -288,9 +279,6 @@ export default function JobDetail({
           )}
         </div>
 
-        {/* ROW 2: Job Description (Left) & Details (Right) */}
-
-        {/* Job Description Card */}
         <section className="lg:col-span-3 bg-white rounded-lg border border-slate-200 p-4 shadow-sm h-full flex flex-col">
           <h2 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
             <Briefcase className="w-4 h-4 text-slate-400" />
@@ -301,7 +289,6 @@ export default function JobDetail({
           </div>
         </section>
 
-        {/* Job Info/Details Card */}
         <div className="lg:col-span-1 bg-white rounded-lg border border-slate-200 p-4 shadow-sm h-full flex flex-col">
           <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2 mb-3">
             <Briefcase className="w-4 h-4 text-slate-400" />
@@ -338,12 +325,21 @@ export default function JobDetail({
               </span>
             </div>
 
-            <div className="flex flex-col gap-0.5">
+            <div className="flex flex-col gap-0.5 pb-2 border-b border-slate-50 last:border-0 last:pb-0">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
                 <Building2 className="w-3 h-3" /> Work Mode
               </span>
               <span className="font-medium text-slate-900 text-xs capitalize">
                 {job.workMode.toLowerCase()}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-0.5 pb-2 border-b border-slate-50 last:border-0 last:pb-0">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                <Banknote className="w-3 h-3" /> Salary
+              </span>
+              <span className="font-medium text-slate-900 text-xs">
+                {formatPaycheck(job.paycheckMin, job.paycheckMax)}
               </span>
             </div>
           </div>
