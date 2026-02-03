@@ -36,7 +36,7 @@ export default function JobCard({
         <div className="shrink-0">
           <div className="w-14 h-14 rounded-lg border border-slate-100 bg-slate-50 overflow-hidden flex items-center justify-center">
             <img
-              src={job.user.profile?.pictureUrl || "/avatars/male.svg"}
+              src={job.user.profile?.pictureUrl || "/avatars/company.svg"}
               alt={job.user.profile?.name || "Company Logo"}
               className="w-full h-full object-cover"
             />

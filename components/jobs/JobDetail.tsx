@@ -173,7 +173,7 @@ export default function JobDetail({
           <h2 className="text-xl font-bold mb-4">Company Profile</h2>
           <div className="flex gap-3">
             <img
-              src={job.user.profile?.pictureUrl || "/avatars/male.svg"}
+              src={job.user.profile?.pictureUrl || "/avatars/company.svg"}
               alt="Company Logo"
               className="h-20 w-20"
             />
