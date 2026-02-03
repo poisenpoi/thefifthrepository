@@ -27,7 +27,7 @@ export default function PathDetails({
     (acc, item) => acc + item.course.duration,
     0,
   );
-  const totalHours = Math.round(totalDurationMinutes / 60);
+  const totalHours = Math.floor(totalDurationMinutes / 60);
   const totalMinutes = totalDurationMinutes % 60;
   const totalCourses = path.items.length;
   const totalLessons = path.items.reduce(
@@ -44,7 +44,7 @@ export default function PathDetails({
 
           <div className="flex flex-col lg:flex-row lg:gap-12">
             {/* Left side - Main content */}
-            <div className="flex-1">
+            <div className="flex-1 md:pl-14">
               <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
                 {path.title}
               </h1>
@@ -77,9 +77,11 @@ export default function PathDetails({
                       Duration
                     </p>
                     <p className="font-bold text-slate-900">
-                      {totalHours > 0
-                        ? `${totalHours}h ${totalMinutes}m`
-                        : `${totalMinutes}m`}
+                      {totalDurationMinutes === 0
+                        ? "—"
+                        : totalHours > 0
+                          ? `${totalHours}h ${totalMinutes}m`
+                          : `${totalMinutes}m`}
                     </p>
                   </div>
                 </div>
@@ -130,9 +132,11 @@ export default function PathDetails({
                   <div className="flex items-center justify-between py-3 border-b border-slate-700">
                     <span className="text-slate-400 text-sm">Est. Duration</span>
                     <span className="font-bold text-lg">
-                      {totalHours > 0
-                        ? `${totalHours}h ${totalMinutes}m`
-                        : `${totalMinutes}m`}
+                      {totalDurationMinutes === 0
+                        ? "—"
+                        : totalHours > 0
+                          ? `${totalHours}h ${totalMinutes}m`
+                          : `${totalMinutes}m`}
                     </span>
                   </div>
                 </div>
@@ -162,7 +166,7 @@ export default function PathDetails({
         <div className="flex flex-col lg:flex-row lg:gap-12">
           {/* Left side - Timeline */}
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-slate-900 mb-10">
+            <h2 className="text-xl font-bold text-slate-900 mb-10 md:ml-14">
               Path Curriculum
             </h2>
 
