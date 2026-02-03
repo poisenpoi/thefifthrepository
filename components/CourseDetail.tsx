@@ -60,11 +60,10 @@ export default async function CourseDetails({
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* header */}
       <div className="bg-slate-900 text-white border-b border-slate-800 relative z-0">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-11">
           <BackButton />
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-            {/* Fix: Changed to fixed height h-52 (13rem) and justify-start to align tags with the card top */}
-            <div className="lg:col-span-2 space-y-6 h-52 flex flex-col justify-start">
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+            <div className="lg:col-span-2 space-y-6 flex flex-col justify-start">
               <div className="flex items-center gap-3">
                 <span className="bg-eduBlue text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                   {course.category.name}

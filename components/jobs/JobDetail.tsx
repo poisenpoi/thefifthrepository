@@ -123,11 +123,11 @@ export default function JobDetail({
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Header - Strictly Original Layout */}
+      {/* Header - Scaled to match PathDetail */}
       <div className="bg-slate-900 text-white border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="space-y-4 flex flex-col">
-            <BackButton />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-5">
+          <BackButton />
+          <div className="mt-8 space-y-4 flex flex-col">
             <span className="bg-eduBlue px-4 py-1 rounded-full text-xs font-bold uppercase w-fit">
               {job.category.name}
             </span>
@@ -173,7 +173,7 @@ export default function JobDetail({
 
       <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* ROW 1: Company Profile (Left) & Overview (Right) */}
-        
+
         {/* Company Profile Card */}
         <section className="lg:col-span-3 bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden h-full flex flex-col">
           <div className="px-5 py-3 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
