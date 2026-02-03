@@ -234,8 +234,10 @@ export default function JobDetail({
           </section>
         </div>
 
-        <div className="space-y-6">
-          <div className="bg-white rounded-xl border p-6 space-y-4">
+        <div className="space-y-8">
+          <div className="bg-white rounded-xl border p-6 space-y-3">
+            <h3 className="font-bold text-slate-900">Application Stats</h3>
+
             <div className="flex justify-between text-sm">
               <span className="text-slate-500">Applicants</span>
               <span className="font-semibold">{job.applicators}</span>
@@ -275,8 +277,8 @@ export default function JobDetail({
             <h3 className="font-bold text-slate-900">Job Info</h3>
 
             <div className="flex justify-between text-sm">
-              <span>Location</span>
-              <span className="capitalize">
+              <span className="text-slate-500">Location</span>
+              <span className="font-semibold capitalize">
                 {job.location ??
                   job.user.profile?.companyAddress ??
                   "Job Location"}
@@ -284,22 +286,22 @@ export default function JobDetail({
             </div>
 
             <div className="flex justify-between text-sm">
-              <span>Level</span>
-              <span className="capitalize">
+              <span className="text-slate-500">Level</span>
+              <span className="font-semibold capitalize">
                 {job.level?.toLowerCase() || "Any"}
               </span>
             </div>
 
             <div className="flex justify-between text-sm">
-              <span>Type</span>
-              <span className="capitalize">
+              <span className="text-slate-500">Type</span>
+              <span className="font-semibold capitalize">
                 {job.type.replace("_", " ").toLowerCase()}
               </span>
             </div>
 
             <div className="flex justify-between text-sm">
-              <span>Work Mode</span>
-              <span className="capitalize">{job.workMode.toLowerCase()}</span>
+              <span className="text-slate-500">Work Mode</span>
+              <span className="font-semibold capitalize">{job.workMode.toLowerCase()}</span>
             </div>
           </div>
         </div>
