@@ -61,8 +61,8 @@ export default async function CourseDetails({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-11 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
           <div className="lg:col-span-2 flex flex-col gap-12">
-            <div className="relative">
-              <div className="absolute -top-[500px] -bottom-12 -left-[100vw] -right-[100vw] bg-slate-900 z-0" />
+            <div className="relative pb-12">
+              <div className="absolute -top-[500px] bottom-0 -left-[100vw] -right-[100vw] bg-slate-900 z-0" />
               <div className="relative z-10">
                 <BackButton />
                 <div className="mt-4 space-y-6 flex flex-col justify-start">
@@ -181,7 +181,7 @@ export default async function CourseDetails({
             </div>
           </div>
 
-          <div className="lg:col-span-1 lg:sticky lg:top-12.5 z-20">
+          <div className="lg:col-span-1 lg:sticky lg:top-13.25 z-20">
             <div className="bg-white rounded-2xl border border-slate-200/60 shadow-2xl shadow-slate-900/5 overflow-hidden">
               <div className="aspect-video relative bg-slate-100 border-b border-slate-200/60">
                 <img
