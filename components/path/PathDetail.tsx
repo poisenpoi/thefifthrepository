@@ -19,14 +19,21 @@ export default function PathDetails({
     (acc, item) => acc + item.course.duration,
     0,
   );
-  const totalHours = Math.max(1, Math.round(totalDurationMinutes / 60));
+
+  // Fix: Handle 0 duration correctly. Only default to 1 hour if there is duration > 0 but < 30 mins.
+  const totalHours =
+    totalDurationMinutes === 0
+      ? 0
+      : Math.max(1, Math.round(totalDurationMinutes / 60));
+      
   const totalCourses = path.items.length;
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-20">
       {/* sub header */}
       <div className="bg-white border-b border-slate-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        {/* Fix: Changed max-w-5xl to max-w-7xl to align with Header */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <BackButton />
 
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
@@ -90,7 +97,8 @@ export default function PathDetails({
       </div>
 
       {/* timeline */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {/* Fix: Changed max-w-5xl to max-w-7xl to align with Header */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h2 className="text-xl font-bold text-slate-900 mb-10">
           Path Curriculum
         </h2>
