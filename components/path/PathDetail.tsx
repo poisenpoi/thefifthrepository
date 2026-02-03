@@ -19,14 +19,15 @@ export default function PathDetails({
     (acc, item) => acc + item.course.duration,
     0,
   );
-  const totalHours = Math.max(1, Math.round(totalDurationMinutes / 60));
+  const totalHours = Math.round(totalDurationMinutes / 60);
+  const totalMinutes = totalDurationMinutes % 60;
   const totalCourses = path.items.length;
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-20">
       {/* sub header */}
       <div className="bg-white border-b border-slate-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <BackButton />
 
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
@@ -58,7 +59,11 @@ export default function PathDetails({
                 <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">
                   Duration
                 </p>
-                <p className="font-bold text-slate-900">{totalHours} Hours</p>
+                <p className="font-bold text-slate-900">
+                  {totalHours > 0
+                    ? `${totalHours}h ${totalMinutes}m`
+                    : `${totalMinutes}m`}
+                </p>
               </div>
             </div>
           </div>
@@ -90,27 +95,27 @@ export default function PathDetails({
       </div>
 
       {/* timeline */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h2 className="text-xl font-bold text-slate-900 mb-10">
           Path Curriculum
         </h2>
 
         <div className="relative">
           {/* vertical line */}
-          <div className="absolute left-8 top-4 bottom-4 w-0.5 bg-slate-200 hidden md:block" />
+          <div className="absolute left-4 top-4 bottom-4 w-0.5 bg-slate-200 hidden md:block" />
 
-          <div className="space-y-8">
+          <div className="space-y-6">
             {path.items.map((item, index) => {
               const { course } = item;
 
               return (
                 <div
                   key={item.id}
-                  className="relative flex flex-col md:flex-row gap-6 md:gap-10 group"
+                  className="relative flex flex-col md:flex-row gap-4 md:gap-6 group"
                 >
                   {/* number */}
                   <div className="hidden md:flex flex-none z-10">
-                    <div className="w-16 h-16 rounded-full bg-white border-2 border-eduBlue text-eduBlue font-bold text-2xl flex items-center justify-center shadow-sm group-hover:bg-eduBlue group-hover:text-white transition-colors duration-300">
+                    <div className="w-8 h-8 rounded-full bg-white border-2 border-eduBlue text-eduBlue font-bold text-sm flex items-center justify-center shadow-sm group-hover:bg-eduBlue group-hover:text-white transition-colors duration-300">
                       {index + 1}
                     </div>
                   </div>
@@ -195,8 +200,8 @@ export default function PathDetails({
           </div>
 
           {/* finish node */}
-          <div className="flex flex-col md:flex-row gap-6 md:gap-10 mt-8 opacity-50">
-            <div className="hidden md:flex flex-none z-10 ml-5">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6 mt-6 opacity-50">
+            <div className="hidden md:flex flex-none z-10 ml-1">
               <div className="w-6 h-6 rounded-full bg-slate-200 border-4 border-white shadow-sm" />
             </div>
             <div className="text-slate-400 font-medium italic pl-1">
