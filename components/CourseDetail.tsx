@@ -181,7 +181,7 @@ export default async function CourseDetails({
             </div>
           </div>
 
-          <div className="lg:col-span-1 lg:sticky lg:top-13 z-20">
+          <div className="lg:col-span-1 lg:sticky lg:top-13 lg:mt-9 z-20">
             <div className="bg-white rounded-2xl border border-slate-200/60 shadow-2xl shadow-slate-900/5 overflow-hidden">
               <div className="aspect-video relative bg-slate-100 border-b border-slate-200/60">
                 <img
