@@ -169,7 +169,7 @@ export default function JobDetail({
 
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Row 1: Company Profile & Application Stats */}
-        <section className="bg-white rounded-xl border border-slate-200 p-6 lg:col-span-3 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+        <section className="bg-white rounded-xl border border-slate-200 p-6 lg:col-span-3 shadow-sm">
           <h2 className="text-xl font-bold mb-4">Company Profile</h2>
           <div className="flex gap-3">
             <img
@@ -226,7 +226,7 @@ export default function JobDetail({
           </div>
         </section>
 
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-3 lg:col-span-1 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-3 lg:col-span-1 shadow-sm">
           <h3 className="text-xl font-bold mb-4">Application Stats</h3>
 
           <div className="flex justify-between text-sm">
@@ -256,14 +256,14 @@ export default function JobDetail({
         </div>
 
         {/* Row 2: Job Description & Job Info */}
-        <section className="bg-white rounded-xl border border-slate-200 p-6 lg:col-span-3 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+        <section className="bg-white rounded-xl border border-slate-200 p-6 lg:col-span-3 shadow-sm">
           <h2 className="text-xl font-bold mb-4">Job Description</h2>
           <p className="text-slate-700 leading-relaxed whitespace-pre-line">
             {job.description}
           </p>
         </section>
 
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-3 lg:col-span-1 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-3 lg:col-span-1 shadow-sm">
           <h3 className="text-xl font-bold mb-4">Job Info</h3>
 
           <div className="flex justify-between text-sm">
