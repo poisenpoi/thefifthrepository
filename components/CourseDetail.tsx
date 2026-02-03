@@ -18,7 +18,6 @@ import { CourseItem } from "@prisma/client";
 import CourseRating from "./CourseRating";
 import CourseItemCard from "./ItemCard";
 import BackButton from "./BackButton";
-import CourseDetailLayout from "./CourseDetailLayout";
 
 interface CourseDetailsProps {
   course: CourseDetailUI;
@@ -60,10 +59,10 @@ export default async function CourseDetails({
   return (
     <div className="min-h-screen bg-slate-50 pb-20 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-11 relative z-10">
-        <CourseDetailLayout
-          leftContent={
-            <>
-              <div className="relative pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* Left Content */}
+          <div className="lg:col-span-2 flex flex-col gap-12">
+            <div className="relative pb-12">
               <div className="absolute -top-[500px] bottom-0 -left-[100vw] -right-[100vw] bg-slate-900 z-0" />
               <div className="relative z-10">
                 <BackButton />
@@ -181,133 +180,136 @@ export default async function CourseDetails({
                 </div>
               </div>
             </div>
-            </>
-          }
-          rightContent={
-            <div className="bg-white rounded-2xl border border-slate-200/60 shadow-2xl shadow-slate-900/5 overflow-hidden">
-              <div className="aspect-video relative bg-slate-100 border-b border-slate-200/60">
-                <img
-                  src={course.thumbnailUrl || "/thumbnail.jpeg"}
-                  alt={course.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/30 via-black/10 to-transparent" />
-                <span className="absolute top-4 left-4 bg-white/80 backdrop-blur-md text-slate-900 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
-                  {course.category.name}
-                </span>
-                <FavoriteButton
-                  courseId={course.id}
-                  isFavorite={course.isFavorite}
-                  isAuthenticated={isAuthenticated}
-                />
-              </div>
+          </div>
 
-              <div className="p-6 flex flex-col gap-6">
-                <div className="space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-slate-600">
-                      {safeProgress}% completed
-                    </span>
-                    <CourseRating
-                      courseId={course.id}
-                      userRating={course.userRating}
-                      isAuthenticated={isAuthenticated}
-                    />
-                  </div>
-                  <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-eduBlue rounded-full transition-all"
-                      style={{ width: `${safeProgress}%` }}
-                    />
-                  </div>
+          {/* Right Content - Sticky Card */}
+          <div className="lg:col-span-1 z-20 self-stretch">
+            <div className="sticky top-[52px] lg:mt-9">
+              <div className="bg-white rounded-2xl border border-slate-200/60 shadow-2xl shadow-slate-900/5 overflow-hidden">
+                <div className="aspect-video relative bg-slate-100 border-b border-slate-200/60">
+                  <img
+                    src={course.thumbnailUrl || "/thumbnail.jpeg"}
+                    alt={course.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/30 via-black/10 to-transparent" />
+                  <span className="absolute top-4 left-4 bg-white/80 backdrop-blur-md text-slate-900 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                    {course.category.name}
+                  </span>
+                  <FavoriteButton
+                    courseId={course.id}
+                    isFavorite={course.isFavorite}
+                    isAuthenticated={isAuthenticated}
+                  />
                 </div>
 
-                <div className="flex flex-col gap-4">
-                  {!isAuthenticated ? (
-                    <Link
-                      href="/login"
-                      className="w-full flex items-center justify-center gap-2 bg-linear-to-r from-eduBlue to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-lg py-4 rounded-xl"
-                    >
-                      Start Learning Now
-                    </Link>
-                  ) : safeProgress === 100 ? (
-                    <Link
-                      href={`/courses/${course.slug}/certificate`}
-                      className="w-full flex items-center justify-center gap-2 bg-eduBlue hover:bg-eduBlue/95 text-white font-medium text-lg py-4 rounded-xl ring-emerald-300 shadow-sm"
-                    >
-                      View Certificate
-                    </Link>
-                  ) : !isEnrolled ? (
-                    <form
-                      action={enrollCourse.bind(null, course.id, course.slug)}
-                    >
-                      <button
-                        type="submit"
+                <div className="p-6 flex flex-col gap-6">
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-slate-600">
+                        {safeProgress}% completed
+                      </span>
+                      <CourseRating
+                        courseId={course.id}
+                        userRating={course.userRating}
+                        isAuthenticated={isAuthenticated}
+                      />
+                    </div>
+                    <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-eduBlue rounded-full transition-all"
+                        style={{ width: `${safeProgress}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-4">
+                    {!isAuthenticated ? (
+                      <Link
+                        href="/login"
                         className="w-full flex items-center justify-center gap-2 bg-linear-to-r from-eduBlue to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-lg py-4 rounded-xl"
                       >
                         Start Learning Now
-                      </button>
-                    </form>
-                  ) : (
-                    <Link
-                      href={startUrl}
-                      className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg py-4 rounded-xl"
-                    >
-                      <Play className="w-5 h-5" />
-                      Continue Learning
-                    </Link>
-                  )}
-                </div>
-
-                <div className="pt-4 border-t border-slate-200/60 space-y-4">
-                  <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
-                    Course Details
-                  </h3>
-
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-3 text-slate-600">
-                      <MessageCircle className="w-5 h-5 text-slate-400" />
-                      <span>Reviews</span>
-                    </div>
-                    <span className="font-semibold text-slate-900">
-                      {course.reviewCount}
-                    </span>
+                      </Link>
+                    ) : safeProgress === 100 ? (
+                      <Link
+                        href={`/courses/${course.slug}/certificate`}
+                        className="w-full flex items-center justify-center gap-2 bg-eduBlue hover:bg-eduBlue/95 text-white font-medium text-lg py-4 rounded-xl ring-emerald-300 shadow-sm"
+                      >
+                        View Certificate
+                      </Link>
+                    ) : !isEnrolled ? (
+                      <form
+                        action={enrollCourse.bind(null, course.id, course.slug)}
+                      >
+                        <button
+                          type="submit"
+                          className="w-full flex items-center justify-center gap-2 bg-linear-to-r from-eduBlue to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-lg py-4 rounded-xl"
+                        >
+                          Start Learning Now
+                        </button>
+                      </form>
+                    ) : (
+                      <Link
+                        href={startUrl}
+                        className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg py-4 rounded-xl"
+                      >
+                        <Play className="w-5 h-5" />
+                        Continue Learning
+                      </Link>
+                    )}
                   </div>
 
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-3 text-slate-600">
-                      <Users className="w-5 h-5 text-slate-400" />
-                      <span>Students</span>
-                    </div>
-                    <span className="font-semibold text-slate-900">
-                      {course.enrollmentCount.toLocaleString()}
-                    </span>
-                  </div>
+                  <div className="pt-4 border-t border-slate-200/60 space-y-4">
+                    <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+                      Course Details
+                    </h3>
 
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-3 text-slate-600">
-                      <Calendar className="w-5 h-5 text-slate-400" />
-                      <span>Last Updated</span>
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-3 text-slate-600">
+                        <MessageCircle className="w-5 h-5 text-slate-400" />
+                        <span>Reviews</span>
+                      </div>
+                      <span className="font-semibold text-slate-900">
+                        {course.reviewCount}
+                      </span>
                     </div>
-                    <span className="font-semibold text-slate-900">
-                      {formatDate(course.updatedAt)}
-                    </span>
-                  </div>
 
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-3 text-slate-600">
-                      <Award className="w-5 h-5 text-slate-400" />
-                      <span>Certificate</span>
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-3 text-slate-600">
+                        <Users className="w-5 h-5 text-slate-400" />
+                        <span>Students</span>
+                      </div>
+                      <span className="font-semibold text-slate-900">
+                        {course.enrollmentCount.toLocaleString()}
+                      </span>
                     </div>
-                    <span className="font-semibold text-slate-900">
-                      Included
-                    </span>
+
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-3 text-slate-600">
+                        <Calendar className="w-5 h-5 text-slate-400" />
+                        <span>Last Updated</span>
+                      </div>
+                      <span className="font-semibold text-slate-900">
+                        {formatDate(course.updatedAt)}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-3 text-slate-600">
+                        <Award className="w-5 h-5 text-slate-400" />
+                        <span>Certificate</span>
+                      </div>
+                      <span className="font-semibold text-slate-900">
+                        Included
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          }
-        />
+          </div>
+        </div>
       </div>
     </div>
   );
