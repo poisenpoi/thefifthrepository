@@ -59,37 +59,38 @@ export default async function CourseDetails({
   return (
     <div className="min-h-screen bg-slate-50 pb-20 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-11 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-          <div className="lg:col-span-2 flex flex-col gap-12">
-            <div className="relative pb-12">
-              <div className="absolute -top-[500px] bottom-0 -left-[100vw] -right-[100vw] bg-slate-900 z-0" />
-              <div className="relative z-10">
-                <BackButton />
-                <div className="mt-4 space-y-6 flex flex-col justify-start">
-                  <div className="flex items-center gap-3">
-                    <span className="bg-eduBlue text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                      {course.category.name}
-                    </span>
-                    {isEnrolled && (
-                      <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
-                        <CheckCircle className="w-3 h-3" /> Enrolled
-                      </span>
-                    )}
-                  </div>
-
-                  <h1 className="text-3xl md:text-3xl font-extrabold tracking-tight leading-tight text-white">
-                    {course.title}
-                  </h1>
-
-                  <p className="text-base text-slate-300 leading-relaxed max-w-2xl">
-                    {course.description}
-                  </p>
-                </div>
+        {/* Hero Section - separate from the main sticky grid */}
+        <div className="relative pb-12">
+          <div className="absolute -top-[500px] bottom-0 -left-[100vw] -right-[100vw] bg-slate-900 z-0" />
+          <div className="relative z-10">
+            <BackButton />
+            <div className="mt-4 space-y-6 flex flex-col justify-start lg:max-w-[calc(66.666%-1.5rem)]">
+              <div className="flex items-center gap-3">
+                <span className="bg-eduBlue text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  {course.category.name}
+                </span>
+                {isEnrolled && (
+                  <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" /> Enrolled
+                  </span>
+                )}
               </div>
-            </div>
 
-            <div className="space-y-8 relative z-10">
-              <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm grid grid-cols-2 sm:grid-cols-4 gap-6">
+              <h1 className="text-3xl md:text-3xl font-extrabold tracking-tight leading-tight text-white">
+                {course.title}
+              </h1>
+
+              <p className="text-base text-slate-300 leading-relaxed max-w-2xl">
+                {course.description}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content Grid - sticky card aligns with this section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+          <div className="lg:col-span-2 space-y-8 relative z-10">
+            <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm grid grid-cols-2 sm:grid-cols-4 gap-6">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-yellow-50 text-yellow-500 rounded-lg">
                     <Star className="w-6 h-6" />
@@ -179,9 +180,8 @@ export default async function CourseDetails({
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="lg:col-span-1 lg:sticky lg:top-13 z-20">
+          <div className="lg:col-span-1 lg:sticky lg:top-13 z-20 lg:-mt-[340px]">
             <div className="bg-white rounded-2xl border border-slate-200/60 shadow-2xl shadow-slate-900/5 overflow-hidden">
               <div className="aspect-video relative bg-slate-100 border-b border-slate-200/60">
                 <img
